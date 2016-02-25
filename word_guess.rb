@@ -9,4 +9,17 @@ class WordGuess
         )
     }
 
+    @word = @words[set_mode].sample
+    puts "Your word is #{ @word }"
+  end
+
+  def set_mode
+    mode = ""
+    until %w(e m h).include? mode
+      print "\nThis can be (e)asy, (m)edium or really (h)ard. The choice is yours."
+      mode = gets.chomp
+    end
+
+    mode
+  end
 end
