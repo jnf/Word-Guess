@@ -25,6 +25,24 @@ class WordGuess
 
     # debugging for now
     puts "Your word is #{ @word }. You have #{ @guesses } guesses."
+
+    # start the game
+    play_turn
+
+  end
+
+  def play_turn
+    # a turn begins by asking a player for their guess
+    letter = ask_for_letter
+
+    # then we determine if that letter is in the word
+
+    # if it us, update the known characters
+
+    # determine if the player has won or lost
+
+    # debugging
+    puts "You guessed #{ letter }."
   end
 
   def set_mode
@@ -35,6 +53,16 @@ class WordGuess
     end
 
     mode
+  end
+
+  def ask_for_letter
+    letter = ""
+    until ('a'..'z').include? letter
+      print "\nPlease guess a letter! (a..z): "
+      letter = gets.chomp.downcase
+    end
+
+    letter
   end
 end
 
