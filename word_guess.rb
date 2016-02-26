@@ -22,28 +22,29 @@ class WordGuess
 
     @word    = @words[mode].sample # chosen word; players try to guess this
     @guesses = @tries[mode] # how many tries the player gets
+    @user_word = "•" * @word.length # a "blank word" for user output
 
     # debugging for now
     puts "Your word is #{ @word }. You have #{ @guesses } guesses."
+    puts "Guess the word: #{ @user_word }"
 
     # start the game
     play_turn
-
   end
 
   def play_turn
     # a turn begins by asking a player for their guess
     letter = ask_for_letter
 
-    # then we determine if that letter is in the word
-    valid = in_word?(letter)
+    # update the word with the letter, maybe
+    update_user_word!(letter)
 
-    # if it us, update the known characters
+    # decrement the available guesses
 
     # determine if the player has won or lost
 
     # debugging
-    puts "You guessed #{ letter }. That is #{ valid }."
+    puts "You guessed #{ letter }. The word is now #{ @user_word }."
   end
 
   def set_mode
@@ -57,8 +58,10 @@ class WordGuess
   end
 
   private
-  def in_word?(letter)
-    return @word.chars.include? letter
+  def update_user_word!(letter)
+    @word.chars.each_index do |index|
+      @user_word[index] = letter if @word[index] == letter
+    end
   end
 
   def ask_for_letter
