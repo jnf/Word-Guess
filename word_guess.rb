@@ -28,8 +28,9 @@ class WordGuess
     puts "Your word is #{ @word }. You have #{ @guesses } guesses."
     puts "Guess the word: #{ @user_word }"
 
-    # start the game
+    # start the first turn
     play_turn
+
   end
 
   def play_turn
@@ -42,14 +43,41 @@ class WordGuess
     # decrement the available guesses
     @guesses -= 1
 
-    # determine if the player has won or lost
-
     # debugging
     puts "You guessed #{ letter }. The word is now #{ @user_word }."
     puts "You have #{ @guesses } guesses left."
+
+    # determine if the player has won or lost
+    if won?
+      end_game(true)
+    elsif lost?
+      end_game(false)
+    else # play another turn if we haven't won or lost
+      play_turn
+    end 
   end
 
   private
+
+  def end_game(won)
+    if won
+      puts "You wins the game! Yay! ^␣^"
+    else
+      puts "You did not wins the game. :( Next time you will, I bet. <3"
+    end
+    exit # game over!
+  end
+
+  def won?
+    # we win when the user has guessed all the letters to the word
+    @word == @user_word
+  end
+
+  def lost?
+    # we lose when the user is out of guesses and has not guessed the word
+    !won? && @guesses <= 0
+  end
+
   def set_mode
     mode = ""
     until %w(e m h).include? mode
