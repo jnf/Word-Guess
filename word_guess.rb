@@ -36,13 +36,14 @@ class WordGuess
     letter = ask_for_letter
 
     # then we determine if that letter is in the word
+    valid = in_word?(letter)
 
     # if it us, update the known characters
 
     # determine if the player has won or lost
 
     # debugging
-    puts "You guessed #{ letter }."
+    puts "You guessed #{ letter }. That is #{ valid }."
   end
 
   def set_mode
@@ -53,6 +54,11 @@ class WordGuess
     end
 
     mode
+  end
+
+  private
+  def in_word?(letter)
+    return @word.chars.include? letter
   end
 
   def ask_for_letter
