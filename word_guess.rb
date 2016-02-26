@@ -1,5 +1,8 @@
 class WordGuess
-  def initialize
+  def initialize(debug = false)
+    # are we in debug mode?
+    @debug = debug
+
     # possible words, selected at random
     @words = {
       "e" => %w(dog cat bug hat cap lit kin fan fin fun tan ten tin ton),
@@ -25,8 +28,13 @@ class WordGuess
     @user_word = "•" * @word.length # a "blank word" for user output
     @guessed = [] # keep track of letters that have been guessed
 
-    # debugging for now
-    puts "Your word is #{ @word }. You have #{ @guesses } guesses."
+    # debugging?
+    if @debug
+      puts "Your word is #{ @word }."
+    end
+
+    # user messages
+    puts "You have #{ @guesses } guesses."
     puts "Guess the word: #{ @user_word }"
 
     # start the first turn
