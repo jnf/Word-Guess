@@ -30,7 +30,6 @@ class WordGuess
 
     # start the first turn
     play_turn
-
   end
 
   def play_turn
@@ -40,8 +39,8 @@ class WordGuess
     # update the word with the letter, maybe
     update_user_word!(letter)
 
-    # decrement the available guesses
-    @guesses -= 1
+    # decrement the available guesses unless the letter matches
+    lose_a_turn?(letter)
 
     # debugging
     puts "You guessed #{ letter }. The word is now #{ @user_word }."
@@ -76,6 +75,12 @@ class WordGuess
   def lost?
     # we lose when the user is out of guesses and has not guessed the word
     !won? && @guesses <= 0
+  end
+
+  def lose_a_turn?(letter)
+    unless @word.chars.include?(letter)
+      @guesses -= 1
+    end
   end
 
   def set_mode
