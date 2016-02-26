@@ -23,6 +23,7 @@ class WordGuess
     @word    = @words[mode].sample # chosen word; players try to guess this
     @guesses = @tries[mode] # how many tries the player gets
     @user_word = "•" * @word.length # a "blank word" for user output
+    @guessed = [] # keep track of letters that have been guessed
 
     # debugging for now
     puts "Your word is #{ @word }. You have #{ @guesses } guesses."
@@ -39,10 +40,15 @@ class WordGuess
     # update the word with the letter, maybe
     update_user_word!(letter)
 
-    # decrement the available guesses unless the letter matches
+    # decrement the available guesses
+    # unless the letter matches and it's not already in the @guessed array
     lose_a_turn?(letter)
 
+    # push the letter into the guessed array, if we need to
+    add_to_guessed(letter)
+
     # debugging
+    puts "Previous guesses: #{ @guessed.join(" ") }"
     puts "You guessed #{ letter }. The word is now #{ @user_word }."
     puts "You have #{ @guesses } guesses left."
 
@@ -57,6 +63,11 @@ class WordGuess
   end
 
   private
+
+  def add_to_guessed(letter)
+    # push the letter to the array, then get rid of duplicates.
+    @guessed.push(letter.upcase).uniq!
+  end
 
   def end_game(won)
     if won
@@ -78,7 +89,9 @@ class WordGuess
   end
 
   def lose_a_turn?(letter)
-    unless @word.chars.include?(letter)
+    # if the guessed letter isn't part of the word and
+    # the guessed letter isn't already in the list of guesses
+    if !@word.chars.include?(letter) && !@guessed.include?(letter.upcase)
       @guesses -= 1
     end
   end
