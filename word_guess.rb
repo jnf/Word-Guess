@@ -40,17 +40,19 @@ class WordGuess
     update_user_word!(letter)
 
     # decrement the available guesses
+    @guesses -= 1
 
     # determine if the player has won or lost
 
     # debugging
     puts "You guessed #{ letter }. The word is now #{ @user_word }."
+    puts "You have #{ @guesses } guesses left."
   end
 
   def set_mode
     mode = ""
     until %w(e m h).include? mode
-      print "\nThis can be (e)asy, (m)edium or really (h)ard. The choice is yours."
+      print "\nThis can be (e)asy, (m)edium or really (h)ard. The choice is yours: "
       mode = gets.chomp
     end
 
