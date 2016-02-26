@@ -49,6 +49,7 @@ class WordGuess
     puts "You have #{ @guesses } guesses left."
   end
 
+  private
   def set_mode
     mode = ""
     until %w(e m h).include? mode
@@ -59,7 +60,6 @@ class WordGuess
     mode
   end
 
-  private
   def update_user_word!(letter)
     @word.chars.each_index do |index|
       @user_word[index] = letter if @word[index] == letter
